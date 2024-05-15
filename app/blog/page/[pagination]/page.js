@@ -4,6 +4,11 @@ import Image from 'next/image'
 import Pagination from "../../../components/pagination"
 import { getAllBlogs, blogsPerPage } from "../../../utils/mdQueries"
 
+export const metadata = {
+  title: "Blog | mimy's portfolio site",
+  desctiption: "mimyのポートフォリオサイトのブログ一覧です。"
+}
+
 const PaginationPage = async(props) => {
   const { blogs, numberPages } = await getAllBlogs()
 

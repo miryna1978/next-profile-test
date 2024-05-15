@@ -1,3 +1,8 @@
+export const metadata = {
+  title: "Contact | mimy's portfolio site",
+  desctiption: "mimyのポートフォリオサイトのお問合せページです。"
+}
+
 const Contact = () => {
   return (
     <>
