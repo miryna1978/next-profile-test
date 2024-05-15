@@ -1,12 +1,17 @@
 import Link from "next/link"
 import Image from 'next/image'
 
-import Pagination from "../components/pagination"
-import { blogsPerPage, getAllBlogs } from "../utils/mdQueries"
+import Pagination from "../../../components/pagination"
+import { getAllBlogs, blogsPerPage } from "../../../utils/mdQueries"
 
-const Blog = async() => {
+const PaginationPage = async(props) => {
   const { blogs, numberPages } = await getAllBlogs()
-  const limitedBlogs = blogs.slice(0, blogsPerPage)
+
+  // ページ番号を取得
+  const currentPage = props.params.pagination
+
+  // 1ページあたりに表示するブログ記事をslice()で制限
+  const limitedBlogs = blogs.slice((currentPage - 1) * blogsPerPage, currentPage * blogsPerPage)
   
   return (
     <>
@@ -35,4 +40,13 @@ const Blog = async() => {
   )
 }
 
-export default Blog
+export default PaginationPage
+
+export async function generateStaticParams() {
+  // 必要なページ数（numberPages）からslugにつける数字を出し、pathsに入れる
+  const { numberPages } = await getAllBlogs()
+  let paths = []
+  Array.from({ length: numberPages }).map((_, index) => paths.push(`/blog/page/${index + 2}`))
+
+  return paths
+}
